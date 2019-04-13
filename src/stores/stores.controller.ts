@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { StoresService } from './stores.service';
 
 @Controller('stores')
@@ -8,9 +8,9 @@ export class StoresController {
   ) {}
 
   @Get('/')
-  async getStores() {
+  async findStores(@Query() query) {
     try {
-      return await this.storeService.getStores();
+      return await this.storeService.findStores(query);
     } catch (e) {
       throw Error(e);
     }

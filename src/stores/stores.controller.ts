@@ -1,5 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { StoresService } from './stores.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('stores')
 export class StoresController {
@@ -8,6 +9,7 @@ export class StoresController {
   ) {}
 
   @Get('/')
+  @UseGuards(AuthGuard)
   async findStores(@Query() query) {
     try {
       return await this.storeService.findStores(query);

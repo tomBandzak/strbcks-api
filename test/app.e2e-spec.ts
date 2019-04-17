@@ -16,16 +16,20 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', async () => {
-    const res = await request(app.getHttpServer()).get('/');
-    expect(res.status).toBe(200);
-    expect(res.text).toContain('Welcome to Starbucks stores location API');
+  describe('/ (GET)', () => {
+    it('should return welcome message', async () => {
+      const res = await request(app.getHttpServer()).get('/');
+      expect(res.status).toBe(200);
+      expect(res.text).toContain('Welcome to Starbucks stores location API');
+    });
   });
 
-  it('/stores (GET)', async () => {
-    const res = await request(app.getHttpServer()).get('/stores?country=SK');
-    expect(res.status).toBe(200);
-    const resObject = JSON.parse(res.text);
-    expect(resObject.every(s => s.country === 'SK')).toBeTruthy();
+  describe('/stores (GET)', () => {
+    it('/stores (GET) should return rows with country=SK', async () => {
+      const res = await request(app.getHttpServer()).get('/stores?country=SK');
+      expect(res.status).toBe(200);
+      const resObject = JSON.parse(res.text);
+      expect(resObject.every(s => s.country === 'SK')).toBeTruthy();
+    });
   });
 });
